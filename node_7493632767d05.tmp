@@ -153,9 +153,8 @@ app.get('/music', function (req, res) {
     var file = __dirname + '/music/' + artist + '/' + album + '/' + fileId;
     fs.exists(file, function (exists) {
         if (exists) {
-           // var rstream = fs.createReadStream(file);
-            res.sendFile(file)
-           // rstream.pipe(res);
+            var rstream = fs.createReadStream(file);
+            rstream.pipe(res);
         } else {
             console.log('ERROR 404 cant find '+ file)
 
