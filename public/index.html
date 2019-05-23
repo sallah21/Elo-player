@@ -17,14 +17,39 @@
             -webkit-filter: blur(10px);
         }
 
-        .current-playlist {
+        ::-webkit-scrollbar {
+            width: 20px;
+        }
 
-            background-color: rgb(32, 31, 28);
+        /* Track */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey;
+            border-radius: 10px;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #4d4d4d;
+            border-radius: 10px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #262626;
+        }
+
+        .current-playlist {
+            background-color: #333333;
             display: block;
             float: right;
             height: 90%;
-            width: 80%;
-
+            width: 65%;
+            border-radius: 10px;
+            border: 0.01% solid;
+            padding-top: 1%;
+            margin-top: 1%;
+            margin-right: 1%;
+          
         }
 
         button {
@@ -33,7 +58,6 @@
             border: thin #262626 solid;
             margin: 1%;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-
             float: left;
             width: 99%;
             height: 5%;
@@ -48,17 +72,21 @@
             float: left;
             background-color: #595959;
             color: whitesmoke;
-            height: 90%;
+            height: 85%;
             width: 10%;
             margin-left: 0.5%;
             border-radius: 2%;
             opacity: 0.5;
+            overflow-y: scroll;
+            padding-bottom: 0.5%;
+            padding-top: 0.5%;
+            padding-left: 0.25%;
+            padding-right: 0.25%l
+
         }
 
         .main {
-
             color: whitesmoke;
-
         }
 
         .footer {
@@ -94,7 +122,6 @@
             display: flex;
             padding-left: 1%;
             padding-bottom: 2%;
-
         }
 
         .artist {
@@ -133,7 +160,6 @@
             border: 1px;
             width: 100%;
             height: 100%;
-
         }
 
         #right-song-play {
@@ -181,87 +207,92 @@
     <script>
         var playlist = [];
         var numberofsongs;
-        function httpGet(theUrl)
-  {
-    var xmlHttp = null;
 
-    xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false );
-    xmlHttp.send( null );
-    return xmlHttp.responseText;
-  }
+        function httpGet(theUrl) {
+            var xmlHttp = null;
+            xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET", theUrl, false);
+            xmlHttp.send(null);
+            return xmlHttp.responseText;
+        }
 
         function getnumberofsongs() {
-
-
             var xhttp = new XMLHttpRequest();
-
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     numberofsongs = this.responseText;
-
                     console.log('number: ' + numberofsongs)
-
-
-
                 }
-
             }
-
             try {
                 //  console.log('im trying ')
                 xhttp.open('GET', 'number.txt', false)
-
                 xhttp.send();
                 return numberofsongs;
             } catch (error) {
                 console.log('error: ' + error)
             }
-
         }
 
         function play(song, artist, cover) {
             var audio = document.getElementById('right-song-play');
+            var buffer = audio.buffered
+            console.log('Buffer ' + audio.duration)
             audio.src = 'http://localhost:3003/music?id=' + song + '.mp3&name=' + song + '.mp3&artist=' + artist +
                 '&album=' + cover;
-            document.getElementById('artist').innerText = artist;
-            document.getElementById('songn').innerText = song;
-            document.getElementById("track_artist").innerText = artist;
-            document.getElementById("track_name").innerText = song;
-            document.getElementById('cover').setAttribute('src', '../public/covers/' + cover + '.PNG')
-            cover.toString()
-            console.log('play(' + song + ',' + artist + ',' + cover + ')')
-            document.getElementById('background').style.backgroundImage = 'url(../public/covers/' + cover + '.PNG)';
-            document.getElementById('disco-cover').style.backgroundImage = 'url(../public/covers/' + cover + '.PNG)';
-            document.getElementById('disco-center').style.backgroundImage = 'url(../public/covers/' + cover + '.PNG)';
+            audio.onloadeddata = function () {
+                document.getElementById('artist').innerText = artist;
+                document.getElementById('songn').innerText = song;
+                document.getElementById("track_artist").innerText = artist;
+                document.getElementById("track_name").innerText = song;
+                document.getElementById('cover').setAttribute('src', '../public/covers/' + cover + '.PNG')
+                cover.toString()
+                console.log('play(' + song + ',' + artist + ',' + cover + ')')
+                document.getElementById('background').style.backgroundImage = 'url(../public/covers/' + cover +
+                    '.PNG)';
+                document.getElementById('disco-cover').style.backgroundImage = 'url(../public/covers/' + cover +
+                    '.PNG)';
+                document.getElementById('disco-center').style.backgroundImage = 'url(../public/covers/' + cover +
+                    '.PNG)';
+                console.log('Audio link : ' + audio.src)
+            }
 
-            console.log('Audio link : ' + audio.src)
         }
 
         function play2(song, artist, cover) {
             var audio = document.getElementById('right-song-play');
             audio.src = 'http://localhost:3003/music?id=' + song + '.mp3&name=' + song + '.mp3&artist=' + artist +
                 '&album=' + cover;
-            document.getElementById('artist').innerText = artist;
-            document.getElementById('songn').innerText = song;
-            document.getElementById("track_artist").innerText = artist;
-            document.getElementById("track_name").innerText = song;
-            document.getElementById('cover').setAttribute('src', cover)
-            document.getElementById('background').style.backgroundImage = 'url(../public/covers/' + cover + ')';
-            document.getElementById('disco-cover').style.backgroundImage = 'url(../public/covers/' + cover + ')';
-            document.getElementById('disco-center').style.backgroundImage = 'url(../public/covers/ ' + cover + ')';
-            console.log(audio.duration);
+            audio.onloadeddata = function () {
+                document.getElementById('artist').innerText = artist;
+                document.getElementById('songn').innerText = song;
+                document.getElementById("track_artist").innerText = artist;
+                document.getElementById("track_name").innerText = song;
+                document.getElementById('cover').setAttribute('src', cover)
+                document.getElementById('background').style.backgroundImage = 'url(../public/covers/' + cover + ')';
+                document.getElementById('disco-cover').style.backgroundImage = 'url(../public/covers/' + cover +
+                ')';
+                document.getElementById('disco-center').style.backgroundImage = 'url(../public/covers/ ' + cover +
+                    ')';
+                console.log(audio.duration);
+            }
 
-          
+
         }
 
         function nextSong() {
             var x = playlist[0].split('+');
-            console.log(x[0])
-            play2(x[1], x[0], x[2]);
+            console.log('Playlist: ' + x );
+            
+            var cover = x[2].split('/')
+            var lastind = cover.length;
+            var cb  =  cover[lastind -1].replace('.PNG', '')
+            console.log('play2('+x[1]+','+ x[0]+','+cb+')')
+            play(x[1], x[0],cb);
             let y = document.getElementById('current-playlist');
             console.log(y.childNodes[1])
             y.removeChild(y.childNodes[1])
+            playlist.shift()
         }
 
         function play_music() {
@@ -284,36 +315,28 @@
             var artist = document.getElementById('artist').innerText;
             var name = document.getElementById('songn').innerText;
             var cover = document.getElementById('cover').src;
-            console.log('artist:' + artist + ' song ' + name + ' cover ' + cover)
+            console.log('Add to playlist  artist:' + artist + ' song ' + name + ' cover ' + cover)
             playlist.push(artist + '+' + name + '+' + cover);
             console.log(playlist)
             var para = document.createElement("P");
             var t = document.createTextNode(artist + ' ' + name);
             para.appendChild(t);
-
             document.getElementById('current-playlist').appendChild(para)
         }
         async function searchingArtist(art, err) {
             if (err) throw err;
             else {
-
                 var xhttp = new XMLHttpRequest();
-
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
                         x = this.responseText;
                         x = x.replace(/.mp3/g, '')
                         //   console.log('x: ' + x)
-
-
-
                     }
-
                 }
                 try {
                     //     console.log('im trying ')
                     xhttp.open('GET', 'art/' + art + '.txt', false)
-
                     xhttp.send();
                     return x;
                 } catch (error) {
@@ -326,24 +349,20 @@
             var tab = [];
             var songs = []
             var xhttp = new XMLHttpRequest();
-
             xhttp.onreadystatechange = async function () {
-
                 if (this.readyState == 4 && this.status == 200) {
                     var x = this.responseText;
                     console.log('xD: ' + x)
                     for (var i = 0; i < x.length; ++i) {
                         tab.push(x[i]);
-
                     }
                     var args = $.makeArray(x);
                     console.log('args: ' + args)
                     var d = args.toString().split(',')
                     console.log('d ' + d)
-
                     d.sort()
                     var n = getnumberofsongs();
-                    for (var i = 0; i < n; i++) {
+                    for (var i = 0; i < d.length; i++) {
                         console.log('I ' + i)
                         var s = await searchingArtist(d[i]).then((result) => {
                             result = result.toString().split(',')
@@ -353,23 +372,24 @@
                                 console.log('MAMY >1 ')
                                 for (var l = 0; l < len; l++) {
                                     console.log('tab[' + l + '] ' + result[l])
-
                                     console.log(" its artis " + d[i])
-                                  
-                                    var song = result[l];
+
+                                    var song = result[l].toString();
+                                    song = song.replace('\n', '')
                                     var art = d[i]
-                                    var album = httpGet('http://localhost:3003/album?artist='+art+'&'+'song='+song+'.mp3');
-                                    
+                                    var album = httpGet('http://localhost:3003/album?artist=' + art +
+                                        '&' + 'song=' + song + '.mp3');
+
                                     var btn = document.createElement("BUTTON");
                                     btn.innerHTML = art + "  " + song;
-                                    btn.setAttribute('id', d[i] )
-                                    console.log('play("' + song + '","' + art + '","'+album+'")')
-                                    btn.setAttribute('onclick', 'play("' + song + '" ,"' + art +'", "'+album+'")')
+                                    btn.setAttribute('id', d[i])
+                                    console.log('play("' + song + '","' + art + '","' + album + '")')
+                                    btn.setAttribute('onclick', 'play("' + song + '" ,"' + art +
+                                        '", "' + album + '")')
                                     document.getElementById('left-menu').appendChild(btn)
 
-
                                 }
-                                i += len
+
                             } else {
                                 // let  song = result.replace('.mp3','') 
                                 console.log('tab[' + i + '] ' + result)
@@ -377,45 +397,40 @@
                                 //  console.log('its D :' + d + " its d[i] " + d[i])
                                 //  console.log("Song: " + result[0])
                                 //console.log("Song: " + result[0])
-                                var song = result;
+                                var song = result.toString();
+                                song = song.replace('\n', '')
                                 var art = d[i]
-                                var album = httpGet('http://localhost:3003/album?artist='+art+'&'+'song='+song+'.mp3')
-                               
+                                var album = httpGet('http://localhost:3003/album?artist=' + art + '&' +
+                                    'song=' + song + '.mp3')
+
                                 var btn = document.createElement("BUTTON");
                                 btn.innerHTML = art + "  " + song;
                                 btn.setAttribute('id', d[i])
-                                console.log('play 2 (' + song + ',' + art +', "' + album + '")')
-                                btn.setAttribute('onclick', 'play("' + song + '","' + art + '", "'+album+'")')
+                                console.log('play 2 (' + song + ',' + art + ', "' + album + '")')
+                                btn.setAttribute('onclick', 'play("' + song + '","' + art + '", "' +
+                                    album + '")')
                                 document.getElementById('left-menu').appendChild(btn)
-
                             }
-
                             // $('.left-menu').append(' <button onclick="play('+ZTM+',"Taco Hemingway","Cafebelga")">'+song+ '</button>')
                         })
-
-
-
                     }
-
-
                 };
             }
             xhttp.open('GET', 'artist.txt', true)
             xhttp.send();
-
         }
 
         function pushing(sngs, source) {
             for (var j = 0; j < source.length; ++j) {
                 sngs.push(source[j]);
-
                 console.log('songs: ' + sngs[j])
             }
             return sngs;
         }
 
         function elemele() {
-            document.getElementById('current-playlist').innerText = (  httpGet('http://localhost:3003/album?artist=Eminem&song=Ringer.mp3'))
+            document.getElementById('current-playlist').innerText = (httpGet(
+                'http://localhost:3003/album?artist=Eminem&song=Ringer.mp3'))
         }
     </script>
     <meta charset="UTF-8">
@@ -496,8 +511,8 @@
                     <div class="song-name" id="songn"> Name </div>
                     <div class="artist" id="artist"> Artist</div>
 
-                    <audio onended="nextSong()" buffered type="audio/mp3" id="right-song-play" controls loop autoplay
-                        src="">
+                    <audio preload="metadata" onended="nextSong()" buffered type="audio/mp3" id="right-song-play"
+                        controls loop autoplay src="">
                         WALE WIADRO</audio>
 
                 </div>
@@ -505,7 +520,7 @@
 
         </div>
         <div class="current-playlist" id="current-playlist"> PLAYLIST:
-            <button onclick="elemele()">ELO WALE WIADRO</button>
+
 
         </div>
 </body>
