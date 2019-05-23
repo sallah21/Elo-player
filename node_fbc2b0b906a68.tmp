@@ -93,10 +93,10 @@ app.get('/', function (req, res) {
             albums.push(currnetalbum)
             console.log('dirs[t] : ' + dirs[t] + ' t ' + t)
 
-            //console.log("CIEKAWE CO : " + albums)
+            console.log("CIEKAWE CO : " + albums)
         }
-      
-      //  console.log("CIEKAWE CO : " + albums[1])
+
+        console.log("CIEKAWE CO : " + albums[1])
         console.log('dirs: ' + dirs)
         console.log('siz ' + siz)
 
@@ -114,35 +114,7 @@ app.get('/', function (req, res) {
 
     return res.redirect('/public/index.html')
 
-})  
-app.get('/album', function(req,res){
-    console.log('////////////////////')
-    console.log('/ALBUM')
-            var artist = req.query.artist;
-            var song = req.query.song;
-            
-            var pathToFile = 'music/'+artist+'/'
-
-            var dir =  fs.readdirSync(pathToFile, function(err){
-                if (err) console.log(err)
-                
-            })
-           
-            for(i=0;i<dir.length;i++){
-             console.log(pathToFile+dir[i]+'/'+song)
-             try {
-               if( fs.existsSync(pathToFile+dir[i]+'/'+song)){
-                res.send(dir[i])
-                res.end()
-            }
-              } catch(err) {
-                console.error(err)
-                  res.end()
-              }
-          
-          
-        }
-        })
+})
 
 app.get('/music', function (req, res) {
     var fileId = req.query.id;
@@ -156,8 +128,7 @@ app.get('/music', function (req, res) {
             var rstream = fs.createReadStream(file);
             rstream.pipe(res);
         } else {
-            console.log('ERROR 404 cant find '+ file)
-
+            console.log('ERROR 404 not found ')
             res.send('its 404');
             res.end();
         }
