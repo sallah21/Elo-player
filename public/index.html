@@ -181,6 +181,15 @@
     <script>
         var playlist = [];
         var numberofsongs;
+        function httpGet(theUrl)
+  {
+    var xmlHttp = null;
+
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false );
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+  }
 
         function getnumberofsongs() {
 
@@ -200,7 +209,7 @@
             }
 
             try {
-                console.log('im trying ')
+                //  console.log('im trying ')
                 xhttp.open('GET', 'number.txt', false)
 
                 xhttp.send();
@@ -221,12 +230,12 @@
             document.getElementById("track_name").innerText = song;
             document.getElementById('cover').setAttribute('src', '../public/covers/' + cover + '.PNG')
             cover.toString()
-
+            console.log('play(' + song + ',' + artist + ',' + cover + ')')
             document.getElementById('background').style.backgroundImage = 'url(../public/covers/' + cover + '.PNG)';
             document.getElementById('disco-cover').style.backgroundImage = 'url(../public/covers/' + cover + '.PNG)';
             document.getElementById('disco-center').style.backgroundImage = 'url(../public/covers/' + cover + '.PNG)';
 
-            console.log('covers: ' + document.getElementById('background').style.backgroundImage)
+            console.log('Audio link : ' + audio.src)
         }
 
         function play2(song, artist, cover) {
@@ -243,7 +252,7 @@
             document.getElementById('disco-center').style.backgroundImage = 'url(../public/covers/ ' + cover + ')';
             console.log(audio.duration);
 
-            console.log('zrobione')
+          
         }
 
         function nextSong() {
@@ -294,7 +303,7 @@
                     if (this.readyState == 4 && this.status == 200) {
                         x = this.responseText;
                         x = x.replace(/.mp3/g, '')
-                        console.log('x: ' + x)
+                        //   console.log('x: ' + x)
 
 
 
@@ -302,7 +311,7 @@
 
                 }
                 try {
-                    console.log('im trying ')
+                    //     console.log('im trying ')
                     xhttp.open('GET', 'art/' + art + '.txt', false)
 
                     xhttp.send();
@@ -333,41 +342,52 @@
                     console.log('d ' + d)
 
                     d.sort()
-                    for (var i = 0; i < getnumberofsongs(); i++) {
-
+                    var n = getnumberofsongs();
+                    for (var i = 0; i < n; i++) {
+                        console.log('I ' + i)
                         var s = await searchingArtist(d[i]).then((result) => {
                             result = result.toString().split(',')
-                            if (result.leght > 1) {
-                                for (var l = 0; l < result.length; l++) {
-                                    console.log('tab[' + i + '] ' + result)
-                                    console.log('its D :' + d + " its d[i] " + d[i])
-                                    console.log("Song: " + result[0])
+                            console.log('result length ' + result.length)
+                            var len = parseInt(result.length)
+                            if (len > 1) {
+                                console.log('MAMY >1 ')
+                                for (var l = 0; l < len; l++) {
+                                    console.log('tab[' + l + '] ' + result[l])
 
+                                    console.log(" its artis " + d[i])
+                                  
+                                    var song = result[l];
+                                    var art = d[i]
+                                    var album = httpGet('http://localhost:3003/album?artist='+art+'&'+'song='+song+'.mp3');
+                                    
                                     var btn = document.createElement("BUTTON");
-                                    btn.innerHTML = d[i] + "  " + result[l];
-                                    btn.setAttribute('id', d[i])
-
+                                    btn.innerHTML = art + "  " + song;
+                                    btn.setAttribute('id', d[i] )
+                                    console.log('play("' + song + '","' + art + '","'+album+'")')
+                                    btn.setAttribute('onclick', 'play("' + song + '" ,"' + art +'", "'+album+'")')
                                     document.getElementById('left-menu').appendChild(btn)
-                                    btn.addEventListener("click", function () {
-                                        play('ZTM', "Taco Hemingway", "Cafebelga")
 
-                                    })
+
                                 }
+                                i += len
                             } else {
                                 // let  song = result.replace('.mp3','') 
                                 console.log('tab[' + i + '] ' + result)
-                                console.log('its D :' + d + " its d[i] " + d[i])
-                                console.log("Song: " + result[0])
-
+                                console.log('MAMY ELSE ')
+                                //  console.log('its D :' + d + " its d[i] " + d[i])
+                                //  console.log("Song: " + result[0])
+                                //console.log("Song: " + result[0])
+                                var song = result;
+                                var art = d[i]
+                                var album = httpGet('http://localhost:3003/album?artist='+art+'&'+'song='+song+'.mp3')
+                               
                                 var btn = document.createElement("BUTTON");
-                                btn.innerHTML = d[i] + "  " + result;
+                                btn.innerHTML = art + "  " + song;
                                 btn.setAttribute('id', d[i])
-
+                                console.log('play 2 (' + song + ',' + art +', "' + album + '")')
+                                btn.setAttribute('onclick', 'play("' + song + '","' + art + '", "'+album+'")')
                                 document.getElementById('left-menu').appendChild(btn)
-                                btn.addEventListener("click", function () {
-                                    play('ZTM', "Taco Hemingway", "Cafebelga")
 
-                                })
                             }
 
                             // $('.left-menu').append(' <button onclick="play('+ZTM+',"Taco Hemingway","Cafebelga")">'+song+ '</button>')
@@ -392,6 +412,10 @@
                 console.log('songs: ' + sngs[j])
             }
             return sngs;
+        }
+
+        function elemele() {
+            document.getElementById('current-playlist').innerText = (  httpGet('http://localhost:3003/album?artist=Eminem&song=Ringer.mp3'))
         }
     </script>
     <meta charset="UTF-8">
@@ -481,6 +505,7 @@
 
         </div>
         <div class="current-playlist" id="current-playlist"> PLAYLIST:
+            <button onclick="elemele()">ELO WALE WIADRO</button>
 
         </div>
 </body>
