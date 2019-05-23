@@ -1,1 +1,0 @@
-INSERT INTO artist(name, genre) VALUES  ('Taco Hemingway', 'rap')
