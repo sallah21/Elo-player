@@ -61,18 +61,28 @@ app.get('/', function (req, res) {
              currnetalbum =  fs.readdirSync( 'music/' + fl[i].toString() + '/', function (err, al) {
                 if (err) console.log(err)
                 console.log('AL: ' + al)
-            })
+            }).toString()
+                console.log('Current album => '+ currnetalbum)
+                currnetalbum = currnetalbum.split(',')
+               
+                console.log('Current length => '+ currnetalbum.length)
               console.log("Current FL["+i+"] : "+fl[i]);
             var fname = 'public/art/' + fl[i] + '.txt';
-            var pathDir = 'music/' + fl[i].toString() + '/'+currnetalbum+'/';
+          
+            var pathDir = 'music/' + fl[i].toString() + '/'+currnetalbum[0]+'/';
+            
+            
 
             // console.log('Iteration: ' + i)
             console.log('Filename: ' + fname)
             console.log('Artist: ' + fl[i])
             console.log('Atrist Folder : ' + pathDir);
-            dirs.push(pathDir);
-            console.log('pathDir: ' + pathDir)
-            fnames.push(fname);
+            for(var d =0 ;d< currnetalbum.length;d++)
+            { console.log('Current album[0] => '+ currnetalbum[d])
+                pathDir = 'music/' + fl[i].toString() + '/'+currnetalbum[d]+'/';
+                dirs.push(pathDir);
+                console.log('pathDir: ' + pathDir)
+                 fnames.push(fname);
             console.log('Fname: ' + fname)
             let songs = fs.readdirSync(pathDir, 'utf-8')
             sngs.push(songs + " ")
@@ -82,7 +92,11 @@ app.get('/', function (req, res) {
                 if (err) console.log(err);
                 console.log('Writing2..' + songs)
             })
-
+            }
+         
+            
+           
+            
             console.log('//////////////////////////////////////')
         }
         for (var t = 0; t < dirs.length; t++) {
