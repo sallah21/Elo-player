@@ -16,7 +16,17 @@
             filter: blur(10px);
             -webkit-filter: blur(10px);
         }
-
+       .album-music, .album-artist{
+            background-color: rgba(89, 89, 89, 0.226);
+            color: whitesmoke;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: rgba(255,255,255,0.4);
+            font-size: 150%;
+                 width: 66%;
+           text-align:  center;
+           margin-left: auto;
+            margin-right: auto 
+        }
         ::-webkit-scrollbar {
             width: 20px;
         }
@@ -470,13 +480,14 @@
                         <div class="disco-center" id="disco-center"></div>
                     </div>
                 </figure>
+               
                 <div class="album-music">
                     <h1 id="track_name">Time<h1>
                 </div>
-                <div class"album-artist">
+                <div class="album-artist">
                     <h6 id="track_artist">Pink Floyd</h6>
                 </div>
-
+                   
 
                 <div class="player-buttons">
                     <a href="#" onclick="repeat_music()" id="repeat_track" title="Repeat"><i
