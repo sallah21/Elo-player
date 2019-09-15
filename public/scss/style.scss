@@ -34,14 +34,14 @@ body{
   color: $light;
 }
 .background{
-  position: absolute;
+  position: fixed;
   background:  url($img-url);
   background-size: cover;
   transform-origin: top left;
   z-index: -1;
-  height: 120%;
-  width: 120%;
-  margin: -10%;
+  height: 100%;
+  width: 100%;
+ 
   filter: blur(10px);
   -webkit-filter: blur(10px);
 }
@@ -154,6 +154,8 @@ h1, h2, h3, h4, h5, h6, p{
   .player-buttons{
     padding: $base-gutter;
     text-align: center;
+    background-color: random($limit: 1);
+    
     .fa{
       padding-left: 10px;
       padding-right: 10px;

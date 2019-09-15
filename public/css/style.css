@@ -21,14 +21,14 @@
   }
   
   .background {
-    position: absolute;
+    position: fixed;
     background-color: rgb(0, 0, 0) ;
     background-size: cover;
     transform-origin: top left;
     z-index: -1;
-    height: 120%;
-    width: 120%;
-    margin: -10%;
+    height: 100%;
+    width: 100%;
+    margin: -0%;
     filter: blur(10px);
     -webkit-filter: blur(10px);
   }
@@ -65,13 +65,14 @@
   }
   
   .container {
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba(88, 85, 85, 0.4);
     width: 60%;
     margin-left: 25%;
     margin-top: 5%;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(0, 0, 0,0.8);
     min-width: 235px;
     height: 60%;
+    border: 1px solid black
   }
   
   .navbar {
@@ -148,6 +149,7 @@
   .player .player-buttons {
     padding: 15px;
     text-align: left;
+    background-color: rgba(255, 255, 255, 0.5)
   
   }
   .player .player-buttons .fa {
