@@ -1,32 +1,88 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <title>ELO player</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="icon" type="image/png"
         href="https://cdn.pixabay.com/photo/2016/03/23/20/49/music-note-1275650_960_720.png">
     <style>
+        .playlist-play-button {
+            min-height: 10px;
+            height: 30%;
+            color: lightblue;
+            margin: auto;
+            font-size: 60%;
+            opacity: 0.6;
+        }
+        .addToPlaylistButton{
+            background-color: aqua;
+            color: whitesmoke;
+            width:20%;
+            padding: auto;
+            height:auto;
+            -webkit-transition-duration: 0.4s; /* Safari */
+            transition-duration: 0.4s;
+           
+        }
         .background {
-            position: absolute;
+            position: fixed;
             background-image: url("./covers/Scorpion.png") center center;
             background-size: cover;
-            transform-origin: top left;
-            z-index: -1;
-            height: 120%;
-            width: 120%;
-            margin: -10%;
+
+
+            height: 100%;
+            width: 100%;
+            margin: -0%;
             filter: blur(10px);
             -webkit-filter: blur(10px);
         }
-       .album-music, .album-artist{
+
+        .playlist-song {
+            background-color: #595959;
+            overflow: auto;
+            font-size: 50%;
+        }
+
+        .playlist {
+            float: left;
+            height: 70%;
+            width: 50%;
+            padding-left: 5%;
+        }
+
+        .cjenter {
+            height: 20%;
+
+            padding: 10%;
+        }
+
+        .playlist-button {
+            min-height: 20px;
+            height: fit-content;
+            color: lightblue;
+            margin: auto;
+            padding: 3%;
+            opacity: 0.6;
+            border: solid;
+            border-radius: 35px;
+            width: 50%;
+            height: 100%;
+            font-size: 50vm;
+            text-align: center;
+        }
+
+        .album-music,
+        .album-artist {
             background-color: rgba(89, 89, 89, 0.226);
             color: whitesmoke;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: rgba(255,255,255,0.4);
+            color: rgba(255, 255, 255, 0.4);
             font-size: 150%;
-                 width: 66%;
-           text-align:  center;
-           margin-left: auto;
-            margin-right: auto 
+            width: 66%;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
         }
+
         ::-webkit-scrollbar {
             width: 20px;
         }
@@ -57,23 +113,52 @@
             border-radius: 10px;
             border: 0.01% solid;
             padding-top: 1%;
-            margin-top: 1%;
+            margin-bottom: 0.5%;
+            margin-top: 0.5%;
             margin-right: 1%;
-          
-        }
 
-        button {
+        }
+        .div{
+           
+           margin: auto;
+           padding: auto;
+           display: table;
+            height: 5%;
+        }
+        
+        .left-menu-button {
             background-color: #262626;
+            color: whitesmoke;
+            border: thin #262626 solid;
+            font-family:'Arial Narrow Bold', sans-serif;
+            margin: auto;
+            font-size: 25vm;
+            width: 78%;
+            height: inherit;  
+            max-width: 80%;
+            text-overflow: clip;
+            -webkit-transition-duration: 0.4s; /* Safari */
+            transition-duration: 0.4s;
+            max-height: inherit;
+        }
+        .left-menu-button:hover{
+            background-color: #4d4d4d;
+            -webkit-transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+        }
+        .addToPlaylistButton:hover{
+            background-color: #333333;
+        }
+       button{
+        background-color: #262626;
             color: whitesmoke;
             border: thin #262626 solid;
             margin: 1%;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            float: left;
+            font-size: medium;
+            justify-content: center;
+            align-items: center;
             width: 99%;
-            height: 5%;
-            padding: 1%;
-        }
-
+       }
         body {
             background-color: #1a1a1a;
         }
@@ -83,16 +168,15 @@
             background-color: #595959;
             color: whitesmoke;
             height: 85%;
-            width: 10%;
+            width: 20%;
             margin-left: 0.5%;
             border-radius: 2%;
-            opacity: 0.5;
+            opacity: 0.7;
             overflow-y: scroll;
             padding-bottom: 0.5%;
             padding-top: 0.5%;
             padding-left: 0.25%;
             padding-right: 0.25%l
-
         }
 
         .main {
@@ -139,9 +223,10 @@
             width: 30%;
             height: 25%;
             text-align: center;
-            font-family: 'Times New Roman', Times, serif;
             text-decoration-style: wavy;
-            margin: 2%
+            margin: 2%;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 110%;
         }
 
         .song-name {
@@ -149,11 +234,12 @@
             width: 40%;
             height: 30%;
             text-align: center;
-            font-size: initial;
+
             margin: 2%;
         }
 
         .song {
+            margin-top: 2%;
             width: 100%;
             height: 50%;
             font-size: initial;
@@ -161,8 +247,8 @@
             border-radius: 25px;
             align-content: center;
             max-width: 500px;
-            border-bottom-left-radius: 0%;
-            border-bottom-right-radius: 0%;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 110%;
         }
 
         img {
@@ -210,6 +296,15 @@
             background-image: url("./covers/Scorpion.png");
             background-size: cover;
         }
+
+        .temp-playlist {
+            float: right;
+            height: 70%;
+            width: 50%;
+            padding-right: 5%;
+            overflow: auto;
+            margin: 0;
+        }
     </style>
 
     <link rel="stylesheet" href="css/style.css">
@@ -217,11 +312,28 @@
     <script>
         var playlist = [];
         var numberofsongs;
+        var currentId = null ; 
+        function readPlaylists() {}
+
+        function savePlaylist() {
+            console.log('Playlist ' + playlist);
+            
+
+            // tu damy playlist normalne bo kurwa zgubiłem się 
+        }
 
         function httpGet(theUrl) {
             var xmlHttp = null;
             xmlHttp = new XMLHttpRequest();
             xmlHttp.open("GET", theUrl, false);
+            xmlHttp.send(null);
+            return xmlHttp.responseText;
+        }
+
+        function httpPut(theUrl) {
+            var xmlHttp = null;
+            xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("PUT", theUrl, false);
             xmlHttp.send(null);
             return xmlHttp.responseText;
         }
@@ -244,10 +356,10 @@
             }
         }
 
-        function play(song, artist, cover) {
+        function play(song, artist, cover , id) {
             var audio = document.getElementById('right-song-play');
             var buffer = audio.buffered
-            console.log('Buffer ' + audio.duration)
+
             audio.src = 'http://localhost:3003/music?id=' + song + '.mp3&name=' + song + '.mp3&artist=' + artist +
                 '&album=' + cover;
             audio.onloadeddata = function () {
@@ -255,9 +367,12 @@
                 document.getElementById('songn').innerText = song;
                 document.getElementById("track_artist").innerText = artist;
                 document.getElementById("track_name").innerText = song;
-                document.getElementById('cover').setAttribute('src', '../public/covers/' + cover + '.PNG')
+
                 cover.toString()
                 console.log('play(' + song + ',' + artist + ',' + cover + ')')
+                cover = cover.replace(/ /g, '_');
+                console.log('REPLACED ' + cover)
+                document.getElementById('cover').setAttribute('src', '../public/covers/' + cover + '.PNG')
                 document.getElementById('background').style.backgroundImage = 'url(../public/covers/' + cover +
                     '.PNG)';
                 document.getElementById('disco-cover').style.backgroundImage = 'url(../public/covers/' + cover +
@@ -266,11 +381,18 @@
                     '.PNG)';
                 console.log('Audio link : ' + audio.src)
             }
+            audio.onended = () => {
+                console.log("Song ended. Playing next song ");
+                nextSong(id+1);
+
+            }
 
         }
 
-        function play2(song, artist, cover) {
+        function play2(song, artist, cover, id) {
             var audio = document.getElementById('right-song-play');
+            var buffer = audio.buffered
+
             audio.src = 'http://localhost:3003/music?id=' + song + '.mp3&name=' + song + '.mp3&artist=' + artist +
                 '&album=' + cover;
             audio.onloadeddata = function () {
@@ -278,36 +400,54 @@
                 document.getElementById('songn').innerText = song;
                 document.getElementById("track_artist").innerText = artist;
                 document.getElementById("track_name").innerText = song;
-                document.getElementById('cover').setAttribute('src', cover)
-                document.getElementById('background').style.backgroundImage = 'url(../public/covers/' + cover + ')';
+
+                cover.toString()
+                console.log('play(' + song + ',' + artist + ',' + cover + ')')
+                cover = cover.replace(/ /g, '_');
+                console.log('REPLACED ' + cover)
+                document.getElementById('cover').setAttribute('src', '../public/covers/' + cover + '.PNG')
+                document.getElementById('background').style.backgroundImage = 'url(../public/covers/' + cover +
+                    '.PNG)';
                 document.getElementById('disco-cover').style.backgroundImage = 'url(../public/covers/' + cover +
-                ')';
-                document.getElementById('disco-center').style.backgroundImage = 'url(../public/covers/ ' + cover +
-                    ')';
-                console.log(audio.duration);
+                    '.PNG)';
+                document.getElementById('disco-center').style.backgroundImage = 'url(../public/covers/' + cover +
+                    '.PNG)';
+                console.log('Audio link : ' + audio.src)
+            }
+            audio.onended = () => {
+                console.log("Song ended. Playing next song ");
+                nextSong(id+1);
+
             }
 
 
         }
 
-        function nextSong() {
-            var x = playlist[0].split('+');
-            console.log('Playlist: ' + x );
-            
-            var cover = x[2].split('/')
-            var lastind = cover.length;
-            var cb  =  cover[lastind -1].replace('.PNG', '')
-            console.log('play2('+x[1]+','+ x[0]+','+cb+')')
-            play(x[1], x[0],cb);
-            let y = document.getElementById('current-playlist');
-            console.log(y.childNodes[1])
-            y.removeChild(y.childNodes[1])
-            playlist.shift()
+        function nextSong(id) {
+            console.log("nextsong ! ")
+            if (playlist.length >= 1) {
+                var x = playlist[0].split('+');
+                console.log('Playlist: ' + x);
+
+                var cover = x[2].split('/')
+                var lastind = cover.length;
+                var cb = cover[lastind - 1].replace('.PNG', '')
+                console.log('play2(' + x[1] + ',' + x[0] + ',' + cb + ')')
+                play(x[1].trim(), x[0].trim(), cb.trim());
+                let y = document.getElementById('temp-playlist');
+                console.log(+y.childNodes[1])
+                y.removeChild(y.childNodes[1])
+                playlist.shift()
+            }
+            else if (playlist.length == 0 ){
+               document.getElementById(id).click();
+            }
+
         }
 
         function play_music() {
             document.getElementById('right-song-play').play();
-            console.log('Playing!');
+
         }
 
         function pause_music() {
@@ -321,17 +461,52 @@
             document.getElementById('right-song-play').play();
         }
 
+        function addToPlaylist2(name,artist,cover) {
+           
+            cover2 = cover.replace("http://localhost:3003/public/covers/", "")
+            cover2 = cover2.replace(".PNG", "")
+            console.log('Add to playlist  artist:' + artist + ' song ' + name + ' cover ' + cover2)
+            playlist.push(artist + ' + ' + name + ' + ' + cover2);
+
+            var d = document.createElement("button");
+            d.className = 'playlist-play-button';
+
+            d.onclick = function () {
+                let y = document.getElementById('temp-playlist');
+                console.log(+y.childNodes[1])
+                y.removeChild(this);
+                playlist.shift()
+                play(name, artist, cover2);
+            }
+            d.textContent = artist + " " + name;
+
+
+            document.getElementById('temp-playlist').appendChild(d)
+        }
+
         function addToPlaylist() {
             var artist = document.getElementById('artist').innerText;
             var name = document.getElementById('songn').innerText;
             var cover = document.getElementById('cover').src;
-            console.log('Add to playlist  artist:' + artist + ' song ' + name + ' cover ' + cover)
-            playlist.push(artist + '+' + name + '+' + cover);
-            console.log(playlist)
-            var para = document.createElement("P");
-            var t = document.createTextNode(artist + ' ' + name);
-            para.appendChild(t);
-            document.getElementById('current-playlist').appendChild(para)
+            cover2 = cover.replace("http://localhost:3003/public/covers/", "")
+            cover2 = cover2.replace(".PNG", "")
+            console.log('Add to playlist  artist:' + artist + ' song ' + name + ' cover ' + cover2)
+            playlist.push(artist + ' + ' + name + ' + ' + cover2);
+
+            var d = document.createElement("button");
+            d.className = 'playlist-play-button';
+
+            d.onclick = function () {
+                let y = document.getElementById('temp-playlist');
+                console.log(+y.childNodes[1])
+                y.removeChild(this);
+                playlist.shift()
+                play(name, artist, cover2);
+            }
+            d.textContent = artist + " " + name;
+
+
+            document.getElementById('temp-playlist').appendChild(d)
         }
         async function searchingArtist(art, err) {
             if (err) throw err;
@@ -359,6 +534,7 @@
             var tab = [];
             var songs = []
             var xhttp = new XMLHttpRequest();
+            var nr = 0;
             xhttp.onreadystatechange = async function () {
                 if (this.readyState == 4 && this.status == 200) {
                     var x = this.responseText;
@@ -376,34 +552,39 @@
                         console.log('I ' + i)
                         var s = await searchingArtist(d[i]).then((result) => {
                             result = result.toString().split(',')
-                            console.log('result length ' + result.length)
+                            // console.log('result length ' + result.length)
                             var len = parseInt(result.length)
                             if (len > 1) {
-                                console.log('MAMY >1 ')
+
                                 for (var l = 0; l < len; l++) {
-                                    console.log('tab[' + l + '] ' + result[l])
-                                    console.log(" its artis " + d[i])
 
                                     var song = result[l].toString();
                                     song = song.replace('\n', '')
                                     var art = d[i]
                                     var album = httpGet('http://localhost:3003/album?artist=' + art +
                                         '&' + 'song=' + song + '.mp3');
-
+                                    var p = document.createElement('div');
+                                    nr ++; 
+                                   
                                     var btn = document.createElement("BUTTON");
+                                    var btn2 = document.createElement('button');
+                                   
+                                    btn2.innerHTML = "&#43"
+                                    btn2.setAttribute('class', 'addToPlaylistButton');
                                     btn.innerHTML = art + "  " + song;
-                                    btn.setAttribute('id', d[i])
-                                    console.log('play("' + song + '","' + art + '","' + album + '")')
-                                    btn.setAttribute('onclick', 'play("' + song + '" ,"' + art +
-                                        '", "' + album + '")')
-                                    document.getElementById('left-menu').appendChild(btn)
+                                    btn.setAttribute('class','left-menu-button')
+                                    btn.setAttribute('id',nr)
+                                    btn.setAttribute('onclick', 'play("' + song + '" ,"' + art + '", "' + album + '",'+nr+')');
+                                    btn2.setAttribute('onclick', 'addToPlaylist2("'+song+'","'+art+'","'+album+'")');
+                                    p.appendChild(btn);
+                                    p.appendChild(btn2);
+                                    document.getElementById('left-menu').appendChild(p)
 
                                 }
 
                             } else {
                                 // let  song = result.replace('.mp3','') 
-                                console.log('tab[' + i + '] ' + result)
-                                console.log('MAMY ELSE ')
+
                                 //  console.log('its D :' + d + " its d[i] " + d[i])
                                 //  console.log("Song: " + result[0])
                                 //console.log("Song: " + result[0])
@@ -412,14 +593,21 @@
                                 var art = d[i]
                                 var album = httpGet('http://localhost:3003/album?artist=' + art + '&' +
                                     'song=' + song + '.mp3')
-
+                                var p = document.createElement('p')
                                 var btn = document.createElement("BUTTON");
+                                var btn2 = document.createElement('button');
                                 btn.innerHTML = art + "  " + song;
                                 btn.setAttribute('id', d[i])
-                                console.log('play 2 (' + song + ',' + art + ', "' + album + '")')
+                                btn2.innerHTML = "&#43";
+                                btn2.setAttribute('class', 'addToPlaylistButton');
+                                nr++ ;
+                                btn.setAttribute('id',nr)        
                                 btn.setAttribute('onclick', 'play("' + song + '","' + art + '", "' +
-                                    album + '")')
-                                document.getElementById('left-menu').appendChild(btn)
+                                    album + '")');
+                                btn2.setAttribute('ondbclick', 'addToPlaylist2("'+song+'","'+art+'","'+album+'",'+nr+')');
+                                p.appendChild(btn);
+                                p.appendChild(btn2);
+                                document.getElementById('left-menu').appendChild(p)
                             }
                             // $('.left-menu').append(' <button onclick="play('+ZTM+',"Taco Hemingway","Cafebelga")">'+song+ '</button>')
                         })
@@ -450,10 +638,6 @@
 
     <div class="left-menu" id="left-menu">
 
-        <button onclick="play('ZTM','Taco Hemingway','Cafebelga')">Taco Hemingway ZTM </button>
-        <button onclick="play('Ringer', 'Eminem','Kamikaze')">Eminem Ringer </button>
-        <button onclick="play('Gods plan','Drake', 'Scorpion')">Drake God's plan </button>
-        <button onclick="play('I Am The Greatest', 'LOGIC','Incredible_True_Story')">LOGIC I Am The Greatest </button>
 
     </div>
 
@@ -464,7 +648,7 @@
     <div class="container">
         <div class="navbar">
             <span class="left">
-                <a href="#" title="Back"><i class="fa fa-arrow-left"></i></a>
+
             </span>
             <span class="right">
                 <a href="#" title="Like"><i class="fa fa-heart-o"></i></a>
@@ -480,14 +664,14 @@
                         <div class="disco-center" id="disco-center"></div>
                     </div>
                 </figure>
-               
+
                 <div class="album-music">
-                    <h1 id="track_name">Time<h1>
+                    <h1 id="track_name">Song<h1>
                 </div>
                 <div class="album-artist">
-                    <h6 id="track_artist">Pink Floyd</h6>
+                    <h6 id="track_artist">Artist</h6>
                 </div>
-                   
+
 
                 <div class="player-buttons">
                     <a href="#" onclick="repeat_music()" id="repeat_track" title="Repeat"><i
@@ -502,10 +686,13 @@
                     <a href="#" id="random_track" title="Random"><i class="fa fa-random"></i></a>
 
                 </div>
+                    <center class="cjenter"> <button onclick="savePlaylist()" class="playlist-button">Save current playlist</button>
+        </center>
             </div>
 
 
         </div>
+        
     </div>
 
     </div>
@@ -523,14 +710,22 @@
                     <div class="artist" id="artist"> Artist</div>
 
                     <audio preload="metadata" onended="nextSong()" buffered type="audio/mp3" id="right-song-play"
-                        controls loop autoplay src="">
+                        controls autoplay src="">
                         WALE WIADRO</audio>
 
                 </div>
             </div>
 
         </div>
-        <div class="current-playlist" id="current-playlist"> PLAYLIST:
+        <div class="current-playlist" id="current-playlist">
+            <div class="playlist" id="playlist" onload="readPlaylists()">
+                TU BYDZIE PALYLISTA
+
+            </div>
+
+            <div class="temp-playlist" id="temp-playlist">
+                TEMP PLAYLIST
+            </div>
 
 
         </div>
